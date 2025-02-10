@@ -1,0 +1,13 @@
+Package: CastoR
+Title: Connects to Castor EDC API
+Version: 1.0
+Authors@R: 
+    person("Ralph", "Brecheisen", , "ralph.brecheisen@gmail.com", role = c("aut", "cre"))
+Description: API client for connecting the Castor EDC API. API client must be initialized with
+    a client ID and client secret. The function get_study_data(study_name) retrieves data for
+    the given study name. Output is returned as a named list with names "records", "field_defs"
+    and "optiongroups".
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
