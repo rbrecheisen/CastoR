@@ -27,7 +27,8 @@ Title: API client for Castor EDC
 
 \item{\code{field_defs}}{Dataframe that holds the field definitions}
 
-\item{\code{optiongroups}}{Dataframe that holds the option groups}
+\item{\code{optiongroups}}{Dataframe that holds the option groups
+Title: Initializes Castor API client}
 }
 \if{html}{\out{</div>}}
 }

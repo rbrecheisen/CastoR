@@ -17,8 +17,6 @@ library(lubridate)
 #' @field data Dataframe that holds the study data records
 #' @field field_defs Dataframe that holds the field definitions
 #' @field optiongroups Dataframe that holds the option groups
-#'
-#' @export
 CastorApiClient = R6Class("CastorApiClient",
 
   public = list(
