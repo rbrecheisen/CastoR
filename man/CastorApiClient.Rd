@@ -2,11 +2,9 @@
 % Please edit documentation in R/castorapiclient.R
 \name{CastorApiClient}
 \alias{CastorApiClient}
-\title{Title: API client for Castor EDC}
+\title{API client for Castor EDC}
 \description{
-Title: API client for Castor EDC
-
-Title: API client for Castor EDC
+A client to interact with the Castor EDC API
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -27,8 +25,7 @@ Title: API client for Castor EDC
 
 \item{\code{field_defs}}{Dataframe that holds the field definitions}
 
-\item{\code{optiongroups}}{Dataframe that holds the option groups
-Title: Initializes Castor API client}
+\item{\code{optiongroups}}{Dataframe that holds the option groups}
 }
 \if{html}{\out{</div>}}
 }
@@ -143,7 +140,6 @@ Gets study name for given study ID
 \if{html}{\out{<a id="method-CastorApiClient-get_study_id_by_name"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-get_study_id_by_name}{}}}
 \subsection{Method \code{get_study_id_by_name()}}{
-]
 Gets study ID for given study name
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$get_study_id_by_name(study_name)}\if{html}{\out{</div>}}

@@ -6,7 +6,9 @@ library(janitor)
 library(lubridate)
 
 
-#' Title: API client for Castor EDC
+#' API client for Castor EDC
+#'
+#' @description A client to interact with the Castor EDC API
 #'
 #' @field api_token_url URL endpoint to retrieve access token for connecting to API
 #' @field api_base_url Base URL endpoint for constructing other endpoint URLs
@@ -17,6 +19,8 @@ library(lubridate)
 #' @field data Dataframe that holds the study data records
 #' @field field_defs Dataframe that holds the field definitions
 #' @field optiongroups Dataframe that holds the option groups
+#'
+#' @export
 CastorApiClient = R6Class("CastorApiClient",
 
   public = list(
@@ -30,7 +34,7 @@ CastorApiClient = R6Class("CastorApiClient",
     field_defs = NULL,
     optiongroups = NULL,
 
-    #' Title: Initializes Castor API client
+    #' Initializes Castor API client
     #'
     #' @description
     #' Initializes the Castor API client with a client ID and secret.
@@ -47,7 +51,7 @@ CastorApiClient = R6Class("CastorApiClient",
       self$retry_waiting_time <- retry_waiting_time
     },
 
-    #' Title: Connects to API
+    #' Connects to API
     #'
     #' @description
     #' Makes connection with API using provided client ID and secret.
@@ -82,7 +86,7 @@ CastorApiClient = R6Class("CastorApiClient",
       return(token)
     },
 
-    #' Title: Checks if connection was successfull
+    #' Checks if connection was successfull
     #'
     #' @description
     #' Checks API token is not NULL and returns TRUE/FALSE
@@ -92,7 +96,7 @@ CastorApiClient = R6Class("CastorApiClient",
       return(!is.null(self$token))
     },
 
-    #' Title: Retrieves all studies (permitted for user)
+    #' Retrieves all studies (permitted for user)
     #'
     #' @description
     #' Retrieves all Castor studies for which the user, associated with the client ID
@@ -123,7 +127,7 @@ CastorApiClient = R6Class("CastorApiClient",
       return(self$studies)
     },
 
-    #' Title: Gets study name for given study ID
+    #' Gets study name for given study ID
     #'
     #' @description
     #' Gets study name for given study ID
@@ -143,9 +147,9 @@ CastorApiClient = R6Class("CastorApiClient",
       return(NULL)
     },
 
-    #' Title: Get study ID for given study name
+    #' Get study ID for given study name
     #'
-    #' @description]
+    #' @description
     #' Gets study ID for given study name
     #'
     #' @param study_name Study name
@@ -163,7 +167,7 @@ CastorApiClient = R6Class("CastorApiClient",
       return(NULL)
     },
 
-    #' Title: Retrieves study data of given type
+    #' Retrieves study data of given type
     #'
     #' @description
     #' Retrieves study data depending on the type of data requested. Possibilities
@@ -205,14 +209,14 @@ CastorApiClient = R6Class("CastorApiClient",
         study_name <- self$get_study_name_by_id(study_id)
         dir.create(file.path(tmp_dir, study_name), recursive = TRUE, showWarnings = FALSE)
         file_path <- file.path(tmp_dir, study_name, paste0(data_type, ".csv"))
-        writeLines(content, file_path, useBytes = TRUE)
+        writeLines(csv_data, file_path, useBytes = TRUE)
         message(sprintf("Data written to %s", file_path))
       }
 
       return(csv_data)
     },
 
-    #' Title: Loads string-encoded CSV data as a data frame
+    #' Loads string-encoded CSV data as a data frame
     #'
     #' @description
     #' Loads string-encoded CSV data (retrieved with get_study_data_as_csv()) and returns
@@ -226,7 +230,7 @@ CastorApiClient = R6Class("CastorApiClient",
       return(df)
     },
 
-    #' Title: Gets field type for a given field variable name
+    #' Gets field type for a given field variable name
     #'
     #' @description
     #' Gets field type for given field variable name
@@ -244,7 +248,7 @@ CastorApiClient = R6Class("CastorApiClient",
       )
     },
 
-    #' Title: Update column data types
+    #' Update column data types
     #'
     #' @description
     #' Updates column data types in given data frame using the given field definitions
@@ -273,7 +277,7 @@ CastorApiClient = R6Class("CastorApiClient",
       return(df)
     },
 
-    #' Title: Get study data as data frame
+    #' Get study data as data frame
     #'
     #' @description
     #' Gets study data as data frame by retrieving field definitions, option groups and record data
@@ -337,7 +341,7 @@ CastorApiClient = R6Class("CastorApiClient",
       return(list(records = self$data, field_defs = self$field_defs, optiongroups = self$optiongroups))
     },
 
-    #' Title: Save study data to file
+    #' Save study data to file
     #'
     #' @description
     #' Saves study data dataframe to file
@@ -351,7 +355,7 @@ CastorApiClient = R6Class("CastorApiClient",
       print(paste0("Saving study records to ", file_path))
     },
 
-    #' Title: Save field definitions to file
+    #' Save field definitions to file
     #'
     #' @description
     #' Saves field definitions (including option groups) to file. Table is in long format
@@ -366,7 +370,7 @@ CastorApiClient = R6Class("CastorApiClient",
       print(paste0("Saving study field definitions to ", file_path))
     },
 
-    #' Title: Save NA counts per column
+    #' Save NA counts per column
     #'
     #' @description
     #' Saves NA counts per column to file
