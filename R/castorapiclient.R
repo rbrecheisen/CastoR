@@ -6,19 +6,20 @@ library(janitor)
 library(lubridate)
 
 
-#' API client for Castor EDC
+#' API client for interacting with Castor EDC API
 #'
-#' @description A client to interact with the Castor EDC API
+#' @description
+#' API client for interacting with Castor EDC API
 #'
-#' @field api_token_url URL endpoint to retrieve access token for connecting to API
-#' @field api_base_url Base URL endpoint for constructing other endpoint URLs
-#' @field token Token string
-#' @field studies Object that holds list of studies available to current user
-#' @field nr_retries Number of times to retry if a REST call fails
-#' @field retry_waiting_time Time in seconds to wait before retrying a REST call after failing
-#' @field data Dataframe that holds the study data records
-#' @field field_defs Dataframe that holds the field definitions
-#' @field optiongroups Dataframe that holds the option groups
+#' @field api_token_url API token URL
+#' @field api_base_url Base URL
+#' @field token Access token
+#' @field studies Study list
+#' @field nr_retries Nr. of retries
+#' @field retry_waiting_time Time in seconds to wait before retrying
+#' @field data Study data records
+#' @field field_defs Study field definitions
+#' @field optiongroups Study option groups
 #'
 #' @export
 CastorApiClient = R6Class("CastorApiClient",
@@ -34,15 +35,12 @@ CastorApiClient = R6Class("CastorApiClient",
     field_defs = NULL,
     optiongroups = NULL,
 
-    #' Initializes Castor API client
+    #' @description Initializes API client
     #'
-    #' @description
-    #' Initializes the Castor API client with a client ID and secret.
-    #'
-    #' @param client_id API client ID
-    #' @param client_secret API client secret
-    #' @param nr_retries Number of time to retry API endpoint calls
-    #' @param retry_waiting_time Time in seconds before trying to call API endpoint again
+    #' @param client_id Client ID
+    #' @param client_secret Client secret
+    #' @param nr_retries Nr. of retries
+    #' @param retry_waiting_time Time in seconds to wait
     #'
     #' @export
     initialize = function(client_id, client_secret, nr_retries = 5, retry_waiting_time = 1) {
@@ -51,14 +49,13 @@ CastorApiClient = R6Class("CastorApiClient",
       self$retry_waiting_time <- retry_waiting_time
     },
 
-    #' Connects to API
+    #' @description Connects to API
     #'
-    #' @description
-    #' Makes connection with API using provided client ID and secret.
+    #' @param client_id Client ID
+    #' @param client_secret Client secret
+    #' @param token_url URL for retrieving access token
     #'
-    #' @param client_id API client ID
-    #' @param client_secret API client secret
-    #' @param token_url URL endpoint for retrieving API access token
+    #' @return Token string
     #'
     #' @export
     connect = function(client_id, client_secret, token_url) {
@@ -86,21 +83,18 @@ CastorApiClient = R6Class("CastorApiClient",
       return(token)
     },
 
-    #' Checks if connection was successfull
+    #' @description Checks whether connected or not
     #'
-    #' @description
-    #' Checks API token is not NULL and returns TRUE/FALSE
+    #' @return `TRUE` if connected, `FALSE` if not
     #'
     #' @export
     is_connected = function() {
       return(!is.null(self$token))
     },
 
-    #' Retrieves all studies (permitted for user)
+    #' @description Gets list of studies
     #'
-    #' @description
-    #' Retrieves all Castor studies for which the user, associated with the client ID
-    #' and secret, has access.
+    #' @return Study list
     #'
     #' @export
     get_studies = function() {
@@ -127,12 +121,11 @@ CastorApiClient = R6Class("CastorApiClient",
       return(self$studies)
     },
 
-    #' Gets study name for given study ID
-    #'
-    #' @description
-    #' Gets study name for given study ID
+    #' @description Gets study name for given ID
     #'
     #' @param study_id Study ID
+    #'
+    #' @return Study name
     #'
     #' @export
     get_study_name_by_id = function(study_id) {
@@ -147,12 +140,11 @@ CastorApiClient = R6Class("CastorApiClient",
       return(NULL)
     },
 
-    #' Get study ID for given study name
-    #'
-    #' @description
-    #' Gets study ID for given study name
+    #' @description Gets study ID for given name
     #'
     #' @param study_name Study name
+    #'
+    #' @return Study ID
     #'
     #' @export
     get_study_id_by_name = function(study_name) {
@@ -167,17 +159,13 @@ CastorApiClient = R6Class("CastorApiClient",
       return(NULL)
     },
 
-    #' Retrieves study data of given type
-    #'
-    #' @description
-    #' Retrieves study data depending on the type of data requested. Possibilities
-    #' are field definitions, option groups or records.
+    #' @description Gets study data of given data type in CSV format
     #'
     #' @param study_id Study ID
-    #' @param data_type Type of study data requested. Must be "structure", "optiongroups"
-    #' or "data", where data are the records
-    #' @param tmp_dir Optional temporary directory where to save the retrieved data (in
-    #' CSV format)
+    #' @param data_type Data type to retrieve. Must be: "data", "structure" or "optiongroups"
+    #' @param tmp_dir Temporary directory to save data
+    #'
+    #' @return Study data
     #'
     #' @export
     get_study_data_as_csv = function(study_id, data_type, tmp_dir = NULL) {
@@ -216,13 +204,11 @@ CastorApiClient = R6Class("CastorApiClient",
       return(csv_data)
     },
 
-    #' Loads string-encoded CSV data as a data frame
+    #' @description Loads CSV as dataframe
     #'
-    #' @description
-    #' Loads string-encoded CSV data (retrieved with get_study_data_as_csv()) and returns
-    #' the data as a data frame
+    #' @param csv_data CSV data in text format
     #'
-    #' @param csv_data String-encoded CSV data
+    #' @return Dataframe
     #'
     #' @export
     load_csv_data = function(csv_data) {
@@ -230,13 +216,12 @@ CastorApiClient = R6Class("CastorApiClient",
       return(df)
     },
 
-    #' Gets field type for a given field variable name
+    #' @description Returns field type for given field name
     #'
-    #' @description
-    #' Gets field type for given field variable name
+    #' @param field_name Field name
+    #' @param field_defs Dataframe with field definitions
     #'
-    #' @param field_name Field variable name
-    #' @param field_defs Field definitions (as retrieved by get_study_data_as_csv())
+    #' @return Field type as string
     #'
     #' @export
     get_field_type = function(field_name, field_defs) {
@@ -248,13 +233,10 @@ CastorApiClient = R6Class("CastorApiClient",
       )
     },
 
-    #' Update column data types
+    #' @description Sets dataframe column types based on field definitions
     #'
-    #' @description
-    #' Updates column data types in given data frame using the given field definitions
-    #'
-    #' @param df Data frame to be updated
-    #' @param field_defs Field definitions (as retrieved by get_study_data_as_csv())
+    #' @param df Dataframe
+    #' @param field_defs Dataframe with field definitions
     #'
     #' @export
     set_dataframe_data_types = function(df, field_defs) {
@@ -277,15 +259,12 @@ CastorApiClient = R6Class("CastorApiClient",
       return(df)
     },
 
-    #' Get study data as data frame
-    #'
-    #' @description
-    #' Gets study data as data frame by retrieving field definitions, option groups and record data
-    #' as string-encoded CSV data and merging these together to form a data frame.
+    #' @description Returns full study data for given study name.
     #'
     #' @param study_name Study name
-    #' @param tmp_dir Optional temporary directory where to save the retrieved data (in
-    #' CSV format)
+    #' @param tmp_dir Temporary directory to save study data to file
+    #'
+    #' @return Named list of records, field definitions and option groups
     #'
     #' @export
     get_study_data = function(study_name, tmp_dir = NULL) {
@@ -341,12 +320,9 @@ CastorApiClient = R6Class("CastorApiClient",
       return(list(records = self$data, field_defs = self$field_defs, optiongroups = self$optiongroups))
     },
 
-    #' Save study data to file
+    #' @description Saves study records to given file
     #'
-    #' @description
-    #' Saves study data dataframe to file
-    #'
-    #' @param file_path Target file path where to save the .Rdata file (default $HOME)
+    #' @param file_path Path to data file
     #'
     #' @export
     save_records = function(file_path = file.path(path.expand("~"), "records.Rdata")) {
@@ -355,13 +331,9 @@ CastorApiClient = R6Class("CastorApiClient",
       print(paste0("Saving study records to ", file_path))
     },
 
-    #' Save field definitions to file
+    #' @description Saves study field definitions to given file
     #'
-    #' @description
-    #' Saves field definitions (including option groups) to file. Table is in long format
-    #' with columns "Field Variable Name", "Field Type", "Option Group Name", "Option Name", "Option Value"
-    #'
-    #' @param file_path Target file path where to save the .Rdata file (default $HOME)
+    #' @param file_path Path to data file
     #'
     #' @export
     save_field_defs = function(file_path = file.path(path.expand("~"), "field_defs.Rdata")) {
@@ -370,12 +342,9 @@ CastorApiClient = R6Class("CastorApiClient",
       print(paste0("Saving study field definitions to ", file_path))
     },
 
-    #' Save NA counts per column
+    #' @description Saves NA counts to file
     #'
-    #' @description
-    #' Saves NA counts per column to file
-    #'
-    #' @param file_path Target file path where to save the .Rdata file (default $HOME)
+    #' @param file_path Path to data file
     #'
     #' @export
     save_na_counts = function(file_path = file.path(path.expand("~"), "na_counts.Rdata")) {
@@ -386,12 +355,3 @@ CastorApiClient = R6Class("CastorApiClient",
     }
   )
 )
-
-# source("credentials.R")
-# credentials <- CastorApiCredentials$new()
-# client <- CastorApiClient$new(credentials$load_client_id(), credentials$load_client_secret())
-# study_name <- "ESPRESSO_v3.0"
-# study_id <- client$get_study_id_by_name(study_name)
-# field_defs <- client$load_csv_data(client$get_study_data_as_csv(study_id, "structure"))
-# df <- client$get_study_data_as_dataframe(study_name)
-# glimpse(df)

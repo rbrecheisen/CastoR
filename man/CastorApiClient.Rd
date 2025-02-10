@@ -2,30 +2,30 @@
 % Please edit documentation in R/castorapiclient.R
 \name{CastorApiClient}
 \alias{CastorApiClient}
-\title{API client for Castor EDC}
+\title{API client for interacting with Castor EDC API}
 \description{
-A client to interact with the Castor EDC API
+API client for interacting with Castor EDC API
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{api_token_url}}{URL endpoint to retrieve access token for connecting to API}
+\item{\code{api_token_url}}{API token URL}
 
-\item{\code{api_base_url}}{Base URL endpoint for constructing other endpoint URLs}
+\item{\code{api_base_url}}{Base URL}
 
-\item{\code{token}}{Token string}
+\item{\code{token}}{Access token}
 
-\item{\code{studies}}{Object that holds list of studies available to current user}
+\item{\code{studies}}{Study list}
 
-\item{\code{nr_retries}}{Number of times to retry if a REST call fails}
+\item{\code{nr_retries}}{Nr. of retries}
 
-\item{\code{retry_waiting_time}}{Time in seconds to wait before retrying a REST call after failing}
+\item{\code{retry_waiting_time}}{Time in seconds to wait before retrying}
 
-\item{\code{data}}{Dataframe that holds the study data records}
+\item{\code{data}}{Study data records}
 
-\item{\code{field_defs}}{Dataframe that holds the field definitions}
+\item{\code{field_defs}}{Study field definitions}
 
-\item{\code{optiongroups}}{Dataframe that holds the option groups}
+\item{\code{optiongroups}}{Study option groups}
 }
 \if{html}{\out{</div>}}
 }
@@ -53,7 +53,7 @@ A client to interact with the Castor EDC API
 \if{html}{\out{<a id="method-CastorApiClient-new"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-new}{}}}
 \subsection{Method \code{new()}}{
-Initializes the Castor API client with a client ID and secret.
+Initializes API client
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$new(
   client_id,
@@ -66,13 +66,13 @@ Initializes the Castor API client with a client ID and secret.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{client_id}}{API client ID}
+\item{\code{client_id}}{Client ID}
 
-\item{\code{client_secret}}{API client secret}
+\item{\code{client_secret}}{Client secret}
 
-\item{\code{nr_retries}}{Number of time to retry API endpoint calls}
+\item{\code{nr_retries}}{Nr. of retries}
 
-\item{\code{retry_waiting_time}}{Time in seconds before trying to call API endpoint again}
+\item{\code{retry_waiting_time}}{Time in seconds to wait}
 }
 \if{html}{\out{</div>}}
 }
@@ -81,7 +81,7 @@ Initializes the Castor API client with a client ID and secret.
 \if{html}{\out{<a id="method-CastorApiClient-connect"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-connect}{}}}
 \subsection{Method \code{connect()}}{
-Makes connection with API using provided client ID and secret.
+Connects to API
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$connect(client_id, client_secret, token_url)}\if{html}{\out{</div>}}
 }
@@ -89,41 +89,49 @@ Makes connection with API using provided client ID and secret.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{client_id}}{API client ID}
+\item{\code{client_id}}{Client ID}
 
-\item{\code{client_secret}}{API client secret}
+\item{\code{client_secret}}{Client secret}
 
-\item{\code{token_url}}{URL endpoint for retrieving API access token}
+\item{\code{token_url}}{URL for retrieving access token}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Token string
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-is_connected"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-is_connected}{}}}
 \subsection{Method \code{is_connected()}}{
-Checks API token is not NULL and returns TRUE/FALSE
+Checks whether connected or not
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$is_connected()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+\code{TRUE} if connected, \code{FALSE} if not
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-get_studies"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-get_studies}{}}}
 \subsection{Method \code{get_studies()}}{
-Retrieves all Castor studies for which the user, associated with the client ID
-and secret, has access.
+Gets list of studies
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$get_studies()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+Study list
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-get_study_name_by_id"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-get_study_name_by_id}{}}}
 \subsection{Method \code{get_study_name_by_id()}}{
-Gets study name for given study ID
+Gets study name for given ID
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$get_study_name_by_id(study_id)}\if{html}{\out{</div>}}
 }
@@ -135,12 +143,15 @@ Gets study name for given study ID
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+Study name
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-get_study_id_by_name"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-get_study_id_by_name}{}}}
 \subsection{Method \code{get_study_id_by_name()}}{
-Gets study ID for given study name
+Gets study ID for given name
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$get_study_id_by_name(study_name)}\if{html}{\out{</div>}}
 }
@@ -152,13 +163,15 @@ Gets study ID for given study name
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+Study ID
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-get_study_data_as_csv"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-get_study_data_as_csv}{}}}
 \subsection{Method \code{get_study_data_as_csv()}}{
-Retrieves study data depending on the type of data requested. Possibilities
-are field definitions, option groups or records.
+Gets study data of given data type in CSV format
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$get_study_data_as_csv(study_id, data_type, tmp_dir = NULL)}\if{html}{\out{</div>}}
 }
@@ -168,21 +181,21 @@ are field definitions, option groups or records.
 \describe{
 \item{\code{study_id}}{Study ID}
 
-\item{\code{data_type}}{Type of study data requested. Must be "structure", "optiongroups"
-or "data", where data are the records}
+\item{\code{data_type}}{Data type to retrieve. Must be: "data", "structure" or "optiongroups"}
 
-\item{\code{tmp_dir}}{Optional temporary directory where to save the retrieved data (in
-CSV format)}
+\item{\code{tmp_dir}}{Temporary directory to save data}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Study data
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-load_csv_data"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-load_csv_data}{}}}
 \subsection{Method \code{load_csv_data()}}{
-Loads string-encoded CSV data (retrieved with get_study_data_as_csv()) and returns
-the data as a data frame
+Loads CSV as dataframe
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$load_csv_data(csv_data)}\if{html}{\out{</div>}}
 }
@@ -190,16 +203,19 @@ the data as a data frame
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{csv_data}}{String-encoded CSV data}
+\item{\code{csv_data}}{CSV data in text format}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Dataframe
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-get_field_type"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-get_field_type}{}}}
 \subsection{Method \code{get_field_type()}}{
-Gets field type for given field variable name
+Returns field type for given field name
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$get_field_type(field_name, field_defs)}\if{html}{\out{</div>}}
 }
@@ -207,18 +223,21 @@ Gets field type for given field variable name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{field_name}}{Field variable name}
+\item{\code{field_name}}{Field name}
 
-\item{\code{field_defs}}{Field definitions (as retrieved by get_study_data_as_csv())}
+\item{\code{field_defs}}{Dataframe with field definitions}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Field type as string
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-set_dataframe_data_types"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-set_dataframe_data_types}{}}}
 \subsection{Method \code{set_dataframe_data_types()}}{
-Updates column data types in given data frame using the given field definitions
+Sets dataframe column types based on field definitions
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$set_dataframe_data_types(df, field_defs)}\if{html}{\out{</div>}}
 }
@@ -226,9 +245,9 @@ Updates column data types in given data frame using the given field definitions
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{df}}{Data frame to be updated}
+\item{\code{df}}{Dataframe}
 
-\item{\code{field_defs}}{Field definitions (as retrieved by get_study_data_as_csv())}
+\item{\code{field_defs}}{Dataframe with field definitions}
 }
 \if{html}{\out{</div>}}
 }
@@ -237,8 +256,7 @@ Updates column data types in given data frame using the given field definitions
 \if{html}{\out{<a id="method-CastorApiClient-get_study_data"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-get_study_data}{}}}
 \subsection{Method \code{get_study_data()}}{
-Gets study data as data frame by retrieving field definitions, option groups and record data
-as string-encoded CSV data and merging these together to form a data frame.
+Returns full study data for given study name.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$get_study_data(study_name, tmp_dir = NULL)}\if{html}{\out{</div>}}
 }
@@ -248,17 +266,19 @@ as string-encoded CSV data and merging these together to form a data frame.
 \describe{
 \item{\code{study_name}}{Study name}
 
-\item{\code{tmp_dir}}{Optional temporary directory where to save the retrieved data (in
-CSV format)}
+\item{\code{tmp_dir}}{Temporary directory to save study data to file}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Named list of records, field definitions and option groups
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CastorApiClient-save_records"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-save_records}{}}}
 \subsection{Method \code{save_records()}}{
-Saves study data dataframe to file
+Saves study records to given file
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$save_records(
   file_path = file.path(path.expand("~"), "records.Rdata")
@@ -268,7 +288,7 @@ Saves study data dataframe to file
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{file_path}}{Target file path where to save the .Rdata file (default $HOME)}
+\item{\code{file_path}}{Path to data file}
 }
 \if{html}{\out{</div>}}
 }
@@ -277,8 +297,7 @@ Saves study data dataframe to file
 \if{html}{\out{<a id="method-CastorApiClient-save_field_defs"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-save_field_defs}{}}}
 \subsection{Method \code{save_field_defs()}}{
-Saves field definitions (including option groups) to file. Table is in long format
-with columns "Field Variable Name", "Field Type", "Option Group Name", "Option Name", "Option Value"
+Saves study field definitions to given file
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$save_field_defs(
   file_path = file.path(path.expand("~"), "field_defs.Rdata")
@@ -288,7 +307,7 @@ with columns "Field Variable Name", "Field Type", "Option Group Name", "Option N
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{file_path}}{Target file path where to save the .Rdata file (default $HOME)}
+\item{\code{file_path}}{Path to data file}
 }
 \if{html}{\out{</div>}}
 }
@@ -297,7 +316,7 @@ with columns "Field Variable Name", "Field Type", "Option Group Name", "Option N
 \if{html}{\out{<a id="method-CastorApiClient-save_na_counts"></a>}}
 \if{latex}{\out{\hypertarget{method-CastorApiClient-save_na_counts}{}}}
 \subsection{Method \code{save_na_counts()}}{
-Saves NA counts per column to file
+Saves NA counts to file
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CastorApiClient$save_na_counts(
   file_path = file.path(path.expand("~"), "na_counts.Rdata")
@@ -307,7 +326,7 @@ Saves NA counts per column to file
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{file_path}}{Target file path where to save the .Rdata file (default $HOME)}
+\item{\code{file_path}}{Path to data file}
 }
 \if{html}{\out{</div>}}
 }
